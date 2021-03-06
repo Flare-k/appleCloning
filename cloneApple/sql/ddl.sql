@@ -1,5 +1,6 @@
 CREATE TABLE `member` (
  `member_id` bigint NOT NULL AUTO_INCREMENT,
+ `member_name` varchar(20) NULL,
  `username` varchar(20) NULL,
  `password` varchar(300) NULL,
  `email` varchar(30) NULL,
@@ -9,7 +10,7 @@ CREATE TABLE `member` (
  `enroll_date` date NULL,
  `del_flag` char(1) NULL,
  `delete_date` date NULL,
- `reg_flag` char(1) NULL,
+ `enabled` boolean NULL,
  primary key(`member_id`)
 );
 
@@ -26,7 +27,7 @@ CREATE TABLE `product` (
 );
 
 CREATE TABLE `product_io` (
- `io_id` INT NOT NULL,
+ `io_id` varchar(30) NOT NULL,
  `p_id` varchar(30) NOT NULL,
  `order_no` INT NOT NULL,
  `amount` INT NULL,

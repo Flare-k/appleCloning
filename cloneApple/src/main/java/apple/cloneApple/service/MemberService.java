@@ -45,4 +45,8 @@ public class MemberService {
 
         return memberRepository.save(member);
     }
+
+    public Member findOne(String username) {
+        return memberRepository.findByUsername(username);
+    }
 }

@@ -20,7 +20,8 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY) //AUTO_INCREMENT
     private Long member_id;   // 아이디 1,2,3,4,...
 
-    private String username; // 이름
+    private String member_name; // 사용자 이름
+    private String username; // 사용할 아이디
     private String password;    // 비밀번호
     private String email;   // 이메일
     private String phone;   // 전화번호

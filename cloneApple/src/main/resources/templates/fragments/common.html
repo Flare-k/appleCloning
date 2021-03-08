@@ -25,6 +25,9 @@
             <li class="nav-item" th:classappend="${menu} == 'home'? 'active'">
                 <a class="nav-link" href="#" th:href="@{/}">홈 <span class="sr-only" th:if="${menu} == 'home'">(current)</span></a>
             </li>
+            <li class="nav-item" th:classappend="${menu} == 'product'? 'active'">
+                <a class="nav-link" href="#" th:href="@{/product/list}">제품 <span class="sr-only" th:if="${menu} == 'product'">(current)</span></a>
+            </li>
         </ul>
 
         <a class="btn btn-secondary my-2 my-sm-0" th:href="@{/member/login}" sec:authorize="!isAuthenticated()">Login</a>

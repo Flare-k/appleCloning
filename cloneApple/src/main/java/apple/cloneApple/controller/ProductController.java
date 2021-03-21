@@ -27,7 +27,7 @@ public class ProductController {
     }
 
     @GetMapping("/list/{category}")
-    public String iPhoneList(Model model, @PathVariable String category) {
+    public String categoryList(Model model, @PathVariable String category) {
         List<Product> products = productRepository.findByCategory(category);
         model.addAttribute("products", products);
 

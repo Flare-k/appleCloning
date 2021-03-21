@@ -18,7 +18,7 @@ CREATE TABLE `product` (
  `p_id` varchar(30) NOT NULL,
  `p_name` varchar(30) NULL,
  `p_price` bigint NULL,
- `p_category` varchar(30) NULL,
+ `category` varchar(30) NULL,
  `description` varchar(50) NULL,
  `p_company` varchar(30) NULL,
  `p_stock` INT NULL,

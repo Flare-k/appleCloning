@@ -40,4 +40,9 @@ public class Member {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
 
     private List<Role> roles = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)   // fetch? User 조회 시 Board를 같이 가져올 것인가. EAGER: 같이 가져옴, LAZY: Board를 사용할 때 조
+    @JsonIgnore
+    private List<Favorite> favorites = new ArrayList<>();
+
 }

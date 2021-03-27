@@ -53,7 +53,7 @@ CREATE TABLE `favorite` (
  `p_name` varchar(30) NULL,
  `amount` INT NULL,
  `p_price` INT(10) NULL,
- `member_id` bigint NULL
+ `username` bigint NOT NULL
 );
 
 CREATE TABLE `dest_list` (

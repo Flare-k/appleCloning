@@ -1,29 +1,31 @@
 package apple.cloneApple.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 @Entity
-@Data
+@Table(name="product")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Product {
-
     @Id
-    private String p_id;        // 상품아이디
-    private String p_name;      // 상품명
-    private Long p_price;       // 상품가격
-    private String category;  // 상품종류
-    private String description; // 상품설명
-    private String p_company;   // 제조회사
-    private int p_stock;        // 상품재고
-    private String p_color;     // 상품색상
-    private Long p_size;        // 상품용량
+    private String productid;        // 상품아이디
+
+    private String productname;      // 상품명
+    private Long productprice;       // 상품가격
+    private String productcategory;  // 상품종류
+    private String productdescription; // 상품설명
+    private String productcompany;   // 제조회사
+    private Integer productstock;        // 상품재고
+    private String productcolor;     // 상품색상
+    private Long productsize;        // 상품용량
 
 
     // Member 입장에서 Favorite은 OneToMany 관계
@@ -33,4 +35,21 @@ public class Product {
     @JsonIgnore
     private List<Favorite> favorites = new ArrayList<>();
 
+    @Builder
+    public Product(String p_id, String p_name, Long p_price,
+                   String p_category, String description,
+                   String p_company, int p_stock,
+                   String p_color, Long p_size){
+
+        this.productid = p_id;
+        this.productname = p_name;
+        this.productprice = p_price;
+        this.productcategory = p_category;
+        this.productdescription = description;
+        this.productcompany = p_company;
+        this.productstock = p_stock;
+        this.productcolor = p_color;
+        this.productsize = p_size;
+
+    }
 }

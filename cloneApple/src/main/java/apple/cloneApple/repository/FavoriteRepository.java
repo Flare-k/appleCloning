@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface FavoriteRepository extends JpaRepository<Favorite, String> {
     List<Favorite> findByUsername(String username);
-    Favorite deleteByP_name(String p_name);
+    // Favorite deleteByName(String p_name);
 }

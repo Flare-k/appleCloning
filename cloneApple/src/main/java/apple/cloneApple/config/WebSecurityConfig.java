@@ -23,8 +23,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()
                 .authorizeRequests()
-                    .antMatchers("/", "/member/register", "/product/list", "/product/list/**", "/css/**", "/api/**", "/swagger-ui.html#").permitAll()
+                    .antMatchers("/favorite", "/", "/member/register", "/product/list", "/product/list/**", "/css/**", "/api/**", "/swagger-ui.html#").permitAll()
                     .anyRequest().authenticated()
                     .and()
                 .formLogin()

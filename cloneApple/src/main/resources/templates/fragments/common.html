@@ -14,7 +14,7 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top" th:fragment="menu(menu)">
-    <a class="navbar-brand" href="#">Apple</a>
+    <a class="navbar-brand">Apple</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
             aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -22,11 +22,65 @@
 
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item" th:classappend="${menu} == 'home'? 'active'">
-                <a class="nav-link" href="#" th:href="@{/}">홈 <span class="sr-only" th:if="${menu} == 'home'">(current)</span></a>
+            <li class="nav-item" th:classappend="${menu} == 'home'">
+                <a class="nav-link" th:href="@{/}">홈 <span class="sr-only" th:if="${menu} == 'home'">(current)</span></a>
             </li>
-            <li class="nav-item" th:classappend="${menu} == 'product'? 'active'">
-                <a class="nav-link" href="#" th:href="@{/product/list}">제품 <span class="sr-only" th:if="${menu} == 'product'">(current)</span></a>
+            <li class="nav-item" th:classappend="${menu} == 'ipad'">
+                <a class="nav-link" data-target="#ipad-version">IPAD<span class="sr-only" th:if="${menu} == 'ipad'">(current)</span>
+                <div class="collapse" id="ipad-version">
+                    <ul class="navbar-nav mr-auto">
+
+                        <li class="nav-item" th:classappend="${menu} == 'ipad-air'">
+                            <a class="nav-link" th:href="@{/product/ipad-air}">iPad Air<span class="sr-only" th:if="${menu} == 'ipad-air'">(current)</span></a>
+                        </li>
+                        <li class="nav-item" th:classappend="${menu} == 'ipad-mini'">
+                            <a class="nav-link" th:href="@{/product/ipad}"href="${/product/ipad-mini}">iPad Mini<span class="sr-only" th:if="${menu} == 'ipad-mini'">(current)</span></a>
+                        </li>
+                        <li class="nav-item" th:classappend="${menu} == 'ipad-pro'">
+                            <a class="nav-link" href="/product/ipad-pro">iPad Pro<span class="sr-only" th:if="${menu} == 'ipad-pro'">(current)</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item" th:classappend="${menu} == 'iphone'">
+                <a class="navbar-toggler" data-toggle="collapse" data-target="#iphone-version" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">IPHONE<span class="sr-only" th:if="${menu} == 'iphone'">(current)</span></a>
+                <!-- <div class="collapse" id="iphone-version"> -->
+                    <ul class="navbar-nav mr-auto" id="iphone-version">
+                        <li class="nav-item" th:classappend="${menu} == 'iphone-11'">
+                            <a class="nav-link" href="/product/iphone-11">iPhone 11<span class="sr-only" th:if="${menu} == 'iphone-11'">(current)</span></a>
+                        </li>
+                        <li class="nav-item" th:classappend="${menu} == 'iphone-12'">
+                            <a class="nav-link" href="/product/iphone-12">iPhone 12<span class="sr-only" th:if="${menu} == 'iphone-12'">(current)</span></a>
+                        </li>
+                        <li class="nav-item" th:classappend="${menu} == 'iphone-12-pro'">
+                            <a class="nav-link" href="/product/iphone-12-pro">iPhone 12 Pro<span class="sr-only" th:if="${menu} == 'iphone-12-pro'">(current)</span></a>
+                        </li>
+                        <li class="nav-item" th:classappend="${menu} == 'iphone-se'">
+                            <a class="nav-link" href="/product/iphone-se">iPhone SE<span class="sr-only" th:if="${menu} == 'iphone-se'">(current)</span></a>
+                        </li>
+                        <li class="nav-item" th:classappend="${menu} == 'iphone-xr'">
+                            <a class="nav-link" href="/product/iphone-xr">iPhone XR<span class="sr-only" th:if="${menu} == 'iphone-xr'">(current)</span></a>
+                        </li>
+                    </ul>
+            </li>
+            <li class="nav-item dropdown" th:classappend="${menu} == 'mac'">
+                <a class="nav-link" data-target="#mac-version">MAC<span class="sr-only" th:if="${menu} == 'mac'">(current)</span></a>
+                <div class="collapse" id="mac-version">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item" th:classappend="${menu} == 'imac'">
+                            <a class="nav-link" href="/product/imac">iMac<span class="sr-only" th:if="${menu} == 'imac'">(current)</span></a>
+                        </li>
+                        <li class="nav-item" th:classappend="${menu} == 'macbook-air'">
+                            <a class="nav-link" href="/product/macbook-air">MacBook Air<span class="sr-only" th:if="${menu} == 'macbook-air'">(current)</span></a>
+                        </li>
+                        <li class="nav-item" th:classappend="${menu} == 'macbook-pro-13'">
+                            <a class="nav-link" href="/product/macbook-pro-13">MacBook Pro 13<span class="sr-only" th:if="${menu} == 'macbook-pro-13'">(current)</span></a>
+                        </li>
+                        <li class="nav-item" th:classappend="${menu} == 'macbook-pro-16'">
+                            <a class="nav-link" href="/product/macbook-pro-16">MacBook Pro 16<span class="sr-only" th:if="${menu} == 'macbook-pro-16'">(current)</span></a>
+                        </li>
+                    </ul>
+                </div>
             </li>
         </ul>
 

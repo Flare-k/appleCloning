@@ -25,11 +25,11 @@
         <th scope="col">가격</th>
         </thead>
         <tbody>
-        <tr th:each="favorites : ${favorites}">
-            <td th:text="${favorites.p_id}"></td>
-            <td th:text="${favorites.p_name}"></td>
-            <td th:text="${favorites.amount}"></td>
-            <td th:text="${favorites.p_price}"></td>
+        <tr th:each="favorite : ${favorites}">
+            <td th:text="${favorite.productid}"></td>
+            <td th:text="${favorite.productname}"></td>
+            <td th:text="${favorite.amount}"></td>
+            <td th:text="${favorite.productprice}"></td>
         </tr>
         </tbody>
     </table>

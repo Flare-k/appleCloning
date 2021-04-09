@@ -26,14 +26,14 @@ public class ProductIO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String io_id; // io_id String으로 수정
-    private String p_id;
-    private int order_no;
+    private String ioid; // io_id String으로 수정
+    private String productid;
+    private int orderno;
     private int amount;
     private String status;
 
     @CreationTimestamp
-    private Timestamp io_date;
+    private Timestamp iodate;
     private String member_id;
 
     @Builder
@@ -41,12 +41,12 @@ public class ProductIO {
                      int amount, String status, Timestamp io_date,
                      String member_id){
 
-        this.io_id = io_id;
-        this.p_id = p_id;
-        this.order_no = order_no;
+        this.ioid = io_id;
+        this.productid = p_id;
+        this.orderno = order_no;
         this.amount = amount;
         this.status = status;
-        this.io_date = io_date;
+        this.iodate = io_date;
         this.member_id = member_id;
     }
 }

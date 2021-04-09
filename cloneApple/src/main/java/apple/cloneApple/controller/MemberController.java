@@ -1,11 +1,8 @@
-package apple.cloneApple.controller;
+package apple.cloneApple.Controller;
 
 import apple.cloneApple.model.Member;
-import apple.cloneApple.model.Product;
 import apple.cloneApple.repository.ProductRepository;
 import apple.cloneApple.service.MemberService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 @Controller
 @RequestMapping("/member")
@@ -54,14 +50,5 @@ public class MemberController {
         //Logger logger = LoggerFactory.getLogger("MemberController.java");
 
         return "member/detail";
-    }
-
-    // 즐겨찾기 확인
-    @GetMapping("/favorite")
-    public String memberFavorite(Model model) {
-        List<Product> products = productRepository.findAll();
-        model.addAttribute("products", products);
-
-        return "member/favorite";
     }
 }

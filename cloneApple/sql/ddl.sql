@@ -1,78 +1,78 @@
-CREATE TABLE `member` (
- `member_id` bigint NOT NULL AUTO_INCREMENT,
- `member_name` varchar(20) NULL,
- `username` varchar(20) NULL,
- `password` varchar(300) NULL,
- `email` varchar(30) NULL,
- `phone` char(11) NULL,
- `gender` char(1) NULL,
- `age` int NULL,
- `enroll_date` date NULL,
- `del_flag` char(1) NULL,
- `delete_date` date NULL,
- `enabled` boolean NULL,
- primary key(`member_id`)
+CREATE TABLE member (
+ member_id bigint NOT NULL AUTO_INCREMENT,
+ member_name varchar(20) NULL,
+ username varchar(20) NULL,
+ password varchar(300) NULL,
+ email varchar(30) NULL,
+ phone char(11) NULL,
+ gender char(1) NULL,
+ age int NULL,
+ enroll_date date NULL,
+ del_flag char(1) NULL,
+ delete_date date NULL,
+ enabled boolean NULL,
+ primary key(member_id)
 );
 
-CREATE TABLE `product` (
- `p_id` varchar(30) NOT NULL,
- `p_name` varchar(30) NULL,
- `p_price` bigint NULL,
- `category` varchar(30) NULL,
- `description` varchar(50) NULL,
- `p_company` varchar(30) NULL,
- `p_stock` INT NULL,
- `p_color` varchar(30) NULL,
- `p_size` INT NULL
+CREATE TABLE product (
+ productId varchar(30) NOT NULL,
+ productName varchar(30) NULL,
+ productPrice bigint NULL,
+ productCategory varchar(30) NULL,
+ productDescription varchar(50) NULL,
+ productCompany varchar(30) NULL,
+ productStock INT NULL,
+ productColor varchar(30) NULL,
+ productSize INT NULL
 );
 
-CREATE TABLE `product_io` (
- `io_id` varchar(30) NOT NULL,
- `p_id` varchar(30) NOT NULL,
- `order_no` INT NOT NULL,
- `amount` INT NULL,
- `status` varchar(10) NULL,
- `io_date` date NULL,
- `member_id` bigint NOT NULL
+CREATE TABLE product_io (
+ ioId varchar(30) NOT NULL,
+ productId varchar(30) NOT NULL,
+ orderNo INT NOT NULL,
+ amount INT NULL,
+ status varchar(10) NULL,
+ ioDate date NULL,
+ member_id bigint NOT NULL
 );
 
-CREATE TABLE `order` (
- `order_no` INT NOT NULL AUTO_INCREMENT,
- `res_name` varchar(20) NULL,
- `res_address` varchar(100) NULL,
- `res_phone` char(11) NULL,
- `member_id` bigint NOT NULL,
- `res_requirement` varchar(100) NULL,
- `total_price` INT NULL,
- `order_date` date NULL,
- primary key(order_no)
+CREATE TABLE orderTable (
+ orderNo bigint NOT NULL AUTO_INCREMENT,
+ resName varchar(20),
+ resAddress varchar(80),
+ resPhone varchar(11),
+ member_id bigint NOT NULL,
+ resRequirement varchar(100) NULL,
+ totalPrice bigint NULL,
+ orderDate date NULL,
+ primary key(orderNo)
 );
 
-CREATE TABLE `favorite` (
- `p_id` varchar(30) NOT NULL,
- `p_name` varchar(30) NULL,
- `amount` INT NULL,
- `p_price` INT(10) NULL,
- `username` bigint NOT NULL
+CREATE TABLE favorite (
+productId varchar(30) NOT NULL,
+productName varchar(30) NULL,
+amount INT NULL,
+productPrice INT(10) NULL,
+username bigint NOT NULL
 );
 
-CREATE TABLE `dest_list` (
- `member_id` bigint NOT NULL,
- `address` varchar(100) NULL
+CREATE TABLE dest_list (
+member_id bigint NOT NULL,
+address varchar(100) NULL
 );
 
 
-ALTER TABLE `product` ADD CONSTRAINT `PK_PRODUCT` PRIMARY KEY (`p_id`);
+ALTER TABLE product ADD CONSTRAINT PK_PRODUCT PRIMARY KEY (productId);
 
-ALTER TABLE `product_io` ADD CONSTRAINT `PK_PRODUCT_IO` PRIMARY KEY (`io_id`, `p_id`, `order_no`);
+ALTER TABLE product_io ADD CONSTRAINT PK_PRODUCT_IO PRIMARY KEY (ioId, productId, orderNo);
 
-ALTER TABLE `favorite` ADD CONSTRAINT `PK_FAVORITE` PRIMARY KEY (`p_id`);
+ALTER TABLE favorite ADD CONSTRAINT PK_FAVORITE PRIMARY KEY (productId);
 
-ALTER TABLE `product_io` ADD CONSTRAINT `FK_product_TO_product_io_1` FOREIGN KEY (`p_id`) REFERENCES `product` (`p_id`);
+ALTER TABLE product_io ADD CONSTRAINT FK_product_TO_product_io_1 FOREIGN KEY (productId) REFERENCES product (productId);
 
-ALTER TABLE `product_io` ADD CONSTRAINT `FK_order_TO_product_io_1` FOREIGN KEY (`order_no`) REFERENCES `order` (`order_no`);
+ALTER TABLE product_io ADD CONSTRAINT FK_orderTable_TO_product_io_1 FOREIGN KEY (orderNo) REFERENCES orderTable (orderNo);
 
-ALTER TABLE `favorite` ADD CONSTRAINT `FK_product_TO_favorite_1` FOREIGN KEY (`p_id`) REFERENCES `product` (`p_id`);
+ALTER TABLE favorite ADD CONSTRAINT FK_product_TO_favorite_1 FOREIGN KEY (productId) REFERENCES product (productId);
 
 // user_role// ROLE TABLE
 CREATE TABLE ROLE(

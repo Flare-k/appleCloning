@@ -16,10 +16,9 @@ import java.util.List;
 
 @EnableWebSecurity
 @Controller
+@RestController
 @RequestMapping("/favorite")
 public class FavoriteController {
-    // @Autowired
-    // private FavoriteRepository favoriteRepository;
 
     @Autowired
     private FavoriteService favoriteService;
@@ -33,14 +32,14 @@ public class FavoriteController {
 
     // 즐겨찾기 조회
     @GetMapping("/view")
-    public String getFavorite(Model model, Authentication authentication) {
+    public List<Favorite> getFavorite(Model model, Authentication authentication) {
 
         String username = authentication.getName(); // 현재 로그인중인 username return
 
         List<Favorite> favorites = favoriteRepository.findByUsername(username);
         model.addAttribute("favorites", favorites);
 
-        return "favorite";
+        return favorites;
     }
 
     @ResponseBody

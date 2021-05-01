@@ -1,13 +1,16 @@
 package apple.cloneApple.service;
 
+import apple.cloneApple.controller.RestException;
 import apple.cloneApple.model.Member;
 import apple.cloneApple.model.Role;
 import apple.cloneApple.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Service
 public class MemberService {
@@ -19,6 +22,12 @@ public class MemberService {
     private PasswordEncoder passwordEncoder;    //비밀번호 암호화
 
     public Member save(Member member) {
+        // 등록된 아이디인지 미리 확인
+        String username = member.getUsername();
+
+        Optional.of(memberRepository.findByUsername(username)).orElseThrow(() ->
+                new RestException(HttpStatus.FOUND, "User already exist"));
+
 
         // 비밀번호 암호화
         String encodedPassword = passwordEncoder.encode(member.getPassword());

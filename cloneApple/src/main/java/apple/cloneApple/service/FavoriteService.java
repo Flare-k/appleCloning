@@ -3,6 +3,7 @@ package apple.cloneApple.service;
 import apple.cloneApple.model.Favorite;
 import apple.cloneApple.model.Product;
 import apple.cloneApple.repository.MemberRepository;
+import apple.cloneApple.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class FavoriteService {
 
     @Autowired
-    private MemberRepository memberRepository;
+    private ProductRepository productRepository;
 
     @ResponseBody
     public Favorite save(Product product, String username) {

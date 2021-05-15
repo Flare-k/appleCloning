@@ -10,6 +10,7 @@ import springfox.documentation.spring.web.json.Json;
 
 @Controller
 @RestController
+
 public class HomeController {
 
     Logger log = LoggerFactory.getLogger(HomeController.class);

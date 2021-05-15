@@ -1,6 +1,7 @@
 package apple.cloneApple.controller;
 
 import apple.cloneApple.model.Member;
+import apple.cloneApple.model.Product;
 import apple.cloneApple.repository.ProductRepository;
 import apple.cloneApple.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,5 +52,14 @@ public class MemberController {
         // model.addAttribute("member", member);
 
         return memberService.findOne(auth.getName());
+    }
+
+    // 장바구니
+    @GetMapping("/order")
+    void getMemberOrder(HttpSession session) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        Member member = memberService.findOne(auth.getName());
+        // return Product 예정 ...
     }
 }

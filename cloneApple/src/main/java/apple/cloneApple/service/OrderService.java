@@ -15,7 +15,7 @@ public class OrderService {
 
     public Product order(Member member, Product product){
         // member랑 product 조인
-        long memberId = member.getMember_id();
+        long memberId = member.getMemPk();
 
         // 멤버 아이디에 맞는 장바구니 정보가 필요한데 ,,,,,
         // 장바구니 ........,, 에 제품을 어떻게 담죠 ........ ㅠㅠ

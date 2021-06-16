@@ -12,41 +12,32 @@ import java.sql.Timestamp;
 // @Table(name="product_io")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ProductIO {
-    /*
-    CREATE TABLE `product_io` (
-        `io_id`	varchar2	NOT NULL,
-        `p_id`	varchar2(30)	NOT NULL,
-        `order_no`	INT	NOT NULL,
-        `amount`	INT	NULL,
-        `status`	varchar2(10)	NULL,
-        `io_date`	date	NULL,
-        `member_id`	varchar2(15)	NOT NULL
-    );
-     */
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private String ioid; // io_id String으로 수정
-    private String productid;
-    private int orderno;
-    private int amount;
-    private String status;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "io_id")
+    private String ioId;        // 입출고 id (pk)
+
+    @Column(name = "order_id")
+    private String orderId;     // 주문 id
+
+    @Column(name = "mem_pk")
+    private Long memPk;         // 회원 pk
+
+    @Column(name = "status")
+    private String status;      // 입출고 상태
 
     @CreationTimestamp
-    private Timestamp iodate;
-    private String member_id;
+    @Column(name = "io_date")
+    private Timestamp ioDate;   // 입출고 날짜
 
     @Builder
-    public ProductIO(String io_id, String p_id, int order_no,
-                     int amount, String status, Timestamp io_date,
-                     String member_id){
+    public ProductIO(String io_id, String order_id, Long memPk,
+                     String status, Timestamp io_date){
 
-        this.ioid = io_id;
-        this.productid = p_id;
-        this.orderno = order_no;
-        this.amount = amount;
+        this.ioId = io_id;
+        this.orderId = order_id;
+        this.memPk = memPk;
         this.status = status;
-        this.iodate = io_date;
-        this.member_id = member_id;
+        this.ioDate = io_date;
     }
 }

@@ -1,62 +1,67 @@
 package apple.cloneApple.service;
 
-import apple.cloneApple.controller.RestException;
+import apple.cloneApple.dto.SignupDto;
+import apple.cloneApple.model.Authority;
 import apple.cloneApple.model.Member;
-import apple.cloneApple.model.Role;
 import apple.cloneApple.repository.MemberRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import apple.cloneApple.util.SecurityUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.Optional;
 
 @Service
 public class MemberService {
 
-    @Autowired
-    private MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;    //비밀번호 암호화
+    public MemberService(MemberRepository memberRepository, PasswordEncoder passwordEncoder) {
+        this.memberRepository = memberRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
-    public Member save(Member member) {
-        // 등록된 아이디인지 미리 확인
-        String username = member.getUsername();
+    @Transactional
+    public Member signup(SignupDto signupDto) {
+        if (memberRepository.findOneWithAuthoritiesByMemId(signupDto.getMemId()).orElse(null) != null) {
+            throw new RuntimeException("이미 가입되어 있는 유저입니다.");
+        }
 
-        Optional.of(memberRepository.findByUsername(username)).orElseThrow(() ->
-                new RestException(HttpStatus.FOUND, "User already exist"));
+        //빌더 패턴의 장점
+        Authority authority = Authority.builder()
+                .authorityName("ROLE_USER")
+                .build();
 
-
-        // 비밀번호 암호화
-        String encodedPassword = passwordEncoder.encode(member.getPassword());
-        member.setPassword(encodedPassword);
-
-        // 회원등록일 설정
-        LocalDate enroll_date;
-        enroll_date = LocalDate.now();
-        member.setEnroll_date(enroll_date);
-
-        // 탈퇴한 회원인지 설정
-        member.setDel_flag('0');
-
-        // 탈퇴한 날짜 설정.. 회원가입 코드이므로 null로 설정
-        LocalDate delete_date = null;
-        member.setDelete_date(delete_date);
-
-        // 비회원인지 설정
-        member.setEnabled(true);
-
-        Role role = new Role();
-        role.setMember_id(1l);
-        member.getRoles().add(role);  // role을 어떤 권한을 줄 것인지 저장한다. user_role 테이블에 role_id가 저장된다.
+        // 아이디, 비밀번호, 이름, 성별, 나이, 이메일, 전화번호, 주소, 등록일, 탈퇴여부, 탈퇴일
+        Member member = Member.builder()
+                .memId(signupDto.getMemId())
+                .memPassword(passwordEncoder.encode(signupDto.getMemPassword()))
+                .memName(signupDto.getMemName())
+                .memGender(signupDto.getMemGender())
+                .memAge(signupDto.getMemAge())
+                .memEmail(signupDto.getMemEmail())
+                .memPhone(signupDto.getMemPhone())
+                .memAddr(signupDto.getMemAddr())
+                .enrollDate(LocalDate.now())
+                .delFlag(false)
+                .authorities(Collections.singleton(authority))
+                .regFlag(true)
+                .build();
 
         return memberRepository.save(member);
     }
 
-    public Member findOne(String username) {
-        return memberRepository.findByUsername(username);
+    @Transactional(readOnly = true)
+    public Optional<Member> getUserWithAuthorities(String memId) {
+        return memberRepository.findOneWithAuthoritiesByMemId(memId);
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<Member> getMyUserWithAuthorities() {
+        return SecurityUtil.getCurrentUsername().flatMap(memberRepository::findOneWithAuthoritiesByMemId);
     }
 
 }

@@ -16,7 +16,7 @@ public class ProductService {
     private ProductRepository productRepository;
 
     public Product findOne(String productName){
-        Product product = productRepository.findByProductname(productName);
+        Product product = productRepository.findByProductName(productName);
 
         Optional.of(product).orElseThrow(() ->
                 new RestException(HttpStatus.NOT_FOUND, "Not found product"));

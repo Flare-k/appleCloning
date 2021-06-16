@@ -1,61 +1,51 @@
 package apple.cloneApple.controller;
 
+import apple.cloneApple.dto.FavoriteDto;
 import apple.cloneApple.model.Favorite;
+import apple.cloneApple.model.Member;
 import apple.cloneApple.model.Product;
 import apple.cloneApple.repository.FavoriteRepository;
 import apple.cloneApple.repository.ProductRepository;
 import apple.cloneApple.service.FavoriteService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import apple.cloneApple.service.MemberService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
-@EnableWebSecurity
-@Controller
 @RestController
 @RequestMapping("/favorite")
 public class FavoriteController {
 
-    @Autowired
-    private FavoriteService favoriteService;
+    private final MemberService memberService;
+    private final FavoriteService favoriteService;
+    private final ProductRepository productRepository;
 
-    @Autowired
-    private FavoriteRepository favoriteRepository;
-
-    @Autowired
-    private ProductRepository productRepository;
-
+    public FavoriteController(MemberService memberService, FavoriteService favoriteService, ProductRepository productRepository) {
+        this.memberService = memberService;
+        this.favoriteService = favoriteService;
+        this.productRepository = productRepository;
+    }
 
     // 즐겨찾기 조회
     @GetMapping("/view")
     public List<Favorite> getFavorite(Model model, Authentication authentication) {
+        Member member = memberService.getMyUserWithAuthorities().get(); // 현재 로그인중인 username return
 
-        String username = authentication.getName(); // 현재 로그인중인 username return
-
-        List<Favorite> favorites = favoriteRepository.findByUsername(username);
-        model.addAttribute("favorites", favorites);
+        List<Favorite> favorites = favoriteService.getFavorite(member.getMemId());
 
         return favorites;
     }
-
-    @ResponseBody
+    
+    // 즐겨찾기 추가 : 클라이언트에서 JSON 형태로 post 해줘야 함
     @PostMapping("/api")
-    public Favorite postFavorite(@RequestParam(required = false)  String productid, Authentication authentication) {
+    public ResponseEntity<Favorite> postFavorite(@Valid @RequestBody FavoriteDto favoriteDto) {
+        Member member = memberService.getMyUserWithAuthorities().get(); // 현재 로그인중인 username return
 
-
-        // favorite table에 등록
-        String username = authentication.getName();
-
-        Product product = productRepository.findByProductid(productid);
-
-        Favorite favorite = favoriteService.save(product, username);
-        favoriteRepository.save(favorite);
-
-        return favorite;
+        return ResponseEntity.ok(favoriteService.save(favoriteDto, member.getMemId()));
     }
 
 /*
